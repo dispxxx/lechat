@@ -1,2 +1,2 @@
 <?php
-require('./views/content_'.$page.'.php');
+require('./controllers/content_'.$page.'.php');
