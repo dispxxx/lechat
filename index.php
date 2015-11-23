@@ -25,7 +25,7 @@ $access_admin = array('dashboard');
 $handler_public = array('user');
 $handler_user = array('user', 'public', 'private');
 
-// Page access
+// Default page
 if (isset($_SESSION['id']))
 {
 	$page = 'chat';
@@ -35,7 +35,7 @@ else
 	$page = 'login';
 }
 
-
+// Page access
 if (isset($_GET['page']))
 {
 	if (in_array($_GET['page'], $access_public) && !isset($_SESSION['id']))
