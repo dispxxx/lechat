@@ -1,3 +1,23 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
-	<a class="navbar-brand" href="#">Project name</a>
+	<a class="navbar-brand" href="index.php">Project name</a>
+	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	  	<ul class="nav navbar-nav">
+	  	<?php if (!isset($_SESSION['id'])) { ?>
+			<li><a href="?page=login">Login</a></li>
+			<li><a href="?page=register">Register</a></li>
+	  	<?php } else {?>
+		  		<li><a href="?page=logout">Logout</a></li>
+				<li><a href="?page=chat">Chat</a></li>
+				<li><a href="?page=private">Private</a></li>
+		<?php if ($_SESSION['status'] == STATUS_ADMIN ) { ?>
+					<li><a href="?page=dashboard">Dashboard</a></li>
+		<?php }}?>	
+	   	</ul>
+	</div>
 </div>
