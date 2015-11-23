@@ -2,6 +2,7 @@
 // User session start
 session_start();
 
+
 // DB connection
 $db = mysqli_connect('192.168.1.51', 'lechat', 'gochat', 'lechat');
 if (mysqli_connect_errno()) {
@@ -9,21 +10,26 @@ if (mysqli_connect_errno()) {
     exit();
 }
 
+
 // Constants
 define('STATUS_USER', '0');
 define('STATUS_ADMIN', '1');
 
+
 // Errors
 $errors = array();
+
 
 // Pages
 $access_public = array('login', 'register');
 $access_user = array('logout', 'chat', 'private');
 $access_admin = array('dashboard');
 
+
 // Handlers
 $handler_public = array('user');
 $handler_user = array('user', 'public', 'private');
+
 
 // Default page
 if (isset($_SESSION['id']))
@@ -34,6 +40,7 @@ else
 {
 	$page = 'login';
 }
+
 
 // Page access
 if (isset($_GET['page']))

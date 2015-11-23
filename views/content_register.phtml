@@ -1,21 +1,26 @@
-<form action="" methode="POST">
-  <div class="form-group col-xs-12 col-sm-6">
-	<label for="name">Name</label>
-	<input type="text" name="register_name" class="form-control" id="register_name" placeholder="Password">
-  </div>
-  <div class="form-group col-xs-12 col-sm-6">
-	<label for="email">Email address</label>
-	<input type="email" name="register_email" class="form-control" id="email" placeholder="Email">
-  </div>
-  <div class="form-group col-xs-12 col-sm-6">
-	<label for="password">Password</label>
-	<input type="password" name="register_password" class="form-control" id="password" placeholder="8 - 20">
-  </div>
-  <div class="form-group col-xs-12 col-sm-6">
-	<label for="password-repeat">Password repeat</label>
-	<input type="password" name="register_password_repeat" class="form-control" id="password-repeat" placeholder="8 - 20">
-  </div>
-  <div class="col-xs-12 col-sm-6">
-  	<button type="submit" class="btn btn-default">Submit</button>
-  </div>
-</form>
+<div class="container">
+	<div class="row">
+		<form action="" method="post">
+			<input type="hidden" name="action" value="register">
+			<div class="form-group col-xs-12 col-sm-6">
+				<label for="name">Name</label>
+				<input type="text" name="register_name" class="form-control" id="register_name" placeholder="8 - 20 characters">
+			</div>
+			<div class="form-group col-xs-12 col-sm-6">
+				<label for="email">Email address</label>
+				<input type="email" name="register_email" class="form-control" id="email" placeholder="Email">
+			</div>
+			<div class="form-group col-xs-12 col-sm-6">
+				<label for="password">Password</label>
+				<input type="password" name="register_password" class="form-control" id="password" placeholder="8 - 20 characters">
+			</div>
+			<div class="form-group col-xs-12 col-sm-6">
+				<label for="password-repeat">Password repeat</label>
+				<input type="password" name="register_password_repeat" class="form-control" id="password-repeat" placeholder="8 - 20 characters">
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<button type="submit" class="btn btn-default">Submit</button>
+			</div>
+		</form>
+	</div>
+</div>
