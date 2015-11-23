@@ -26,7 +26,15 @@ $handler_public = array('user');
 $handler_user = array('user', 'public', 'private');
 
 // Page access
-$page = 'home';
+if (isset($_SESSION['id']))
+{
+	$page = 'chat';
+}
+else
+{
+	$page = 'login';
+}
+
 
 if (isset($_GET['page']))
 {
