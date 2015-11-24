@@ -79,6 +79,5 @@ else
 		exit;
 	}
 }
-var_dump($_POST);
 
 require('controllers/skel.php');

@@ -2,25 +2,45 @@
 	$(document).ready(function() {
 		function getMessage()
 		{
-			$.post("index.php?page=chat", {handler: "public", action: "recept"},function(data)
-			{
-				$('.chatbox').html(data);
-			})
+			$.post(
+				"index.php?page=chat",
+				{
+					handler: "public",
+					action: "recept"
+				},
+				function(data)
+				{
+					$('.chatbox').html(data)
+				}
+			)
 		}
 		getMessage();
-		// setInterval(getMessage, 1000);
+		setInterval(getMessage, 1000);
 
-		$('.form_chat').submit( function (){
-			var id_user = <?php echo $_SESSION['id'];?>;
-			var content = $('.message_chat').val();
-			var action = $('.message_action').val();
-			$.post('index.php?page=chat', { handler: "public", message_id_sender: id_user, message_content: content ,action: action}, function(status){
-				$('.chatbox').append(status);
-				$('.message_chat').val(''); 
-			});
-			getMessage();
-			return false;
-		}) 
+		$('.form_chat').submit(
+			function ()
+			{
+				var content = $('.message_chat').val()
+				var action = $('.message_action').val()
+				
+				$.post(
+					'index.php?page=chat',
+					{
+						handler: "public",
+						message_content: content,
+						action: action
+					},
+					function(status)
+					{
+						$('.chatbox').append(status)
+						$('.message_chat').val('')
+					}
+				)
+				
+				getMessage()
+				return false
+			}
+		)
 	})
 
 
