@@ -2,8 +2,10 @@
 
 // Test post_action
 $actions = array('login', 'register');
+
 if (isset($_POST['action']) && in_array($_POST['action'], $actions))
 {
+
 	$action = $_POST['action'];
 
 
@@ -15,18 +17,14 @@ if (isset($_POST['action']) && in_array($_POST['action'], $actions))
 			$login_email = mysqli_escape_string($db, $_POST['login_email']);
 			$login_password = $_POST['login_password'];
 
-			if ($user = mysqli_fetch_assoc(mysqli_query($db,'SELECT (*)
+			if ($user = mysqli_fetch_assoc(mysqli_query($db,'SELECT *
 															 FROM user
 															 WHERE email = "'. $login_email .'"')))
 			{
 				if (password_verify($login_password, $user['password']))
 				{
-					$_SESSION['date_ban'] = $user['date_ban'];
-
-					if (strtotime($_SESSION['date_ban']) < time()) {
+					if ($user['date_ban'] != null && strtotime($user['date_ban']) < time()) {
 						$errors[] = "Votre compte est désactivé jusqu'au". strtotime($_SESSION['date_ban']);
-						header('location: ?page='. $page);
-						exit;
 					}
 					else
 					{
@@ -34,15 +32,18 @@ if (isset($_POST['action']) && in_array($_POST['action'], $actions))
 						$_SESSION['email'] = $user['email'];
 						$_SESSION['name'] = $user['name'];
 						$_SESSION['status'] = $user['status'];
-						$page = 'chat';
-						header('location: ?page='. $page);
+						header('location: ?page=chat');
 						exit;
 					}
+				}
+				else
+				{
+					$errors[] = "Wrong password";
 				}
 			}
 			else
 			{
-				$errors[] = "User not found"
+				$errors[] = "User not found";
 			}
 		}
 	}
@@ -51,7 +52,6 @@ if (isset($_POST['action']) && in_array($_POST['action'], $actions))
 	// Register
 	if ($action == 'register')
 	{
-
 
 		// Check each registration field for error
 		if (isset($_POST['register_name']) && $_POST['register_name'] != "")
@@ -72,11 +72,11 @@ if (isset($_POST['action']) && in_array($_POST['action'], $actions))
 		}
 		else
 		{
-			$errors[] = "Username not filled"
+			$errors[] = "Username not filled";
 		}
 		if (isset($_POST['register_email']) && $_POST['register_email'] != "")
 		{
-			$register_email = mysqli_escape_string($_POST['register_email']);
+			$register_email = mysqli_escape_string($db, $_POST['register_email']);
 
 			if (!preg_match("#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z]{2,5}$#", $register_email))
 			{
@@ -85,18 +85,24 @@ if (isset($_POST['action']) && in_array($_POST['action'], $actions))
 		}
 		else
 		{
-			$errors[] = "Email not filled"
+			$errors[] = "Email not filled";
 		}
 		if (isset($_POST['register_password']) && $_POST['register_password'] != "")
 		{
 			if (strlen($_POST['register_password']) < 8 || strlen($_POST['register_password']) > 30)
 			{
-				$errors = "Password must be between 8 and 30 characters long";
+				$errors[] = "Password must be between 8 and 30 characters long";
+			}
+			else
+			{
+				if ($_POST['register_password'] != $_POST['register_password_repeat']) {
+					$errors[] = "Password fields don't match";
+				}
 			}
 		}
 		else
 		{
-			$errors[] = "Password not filled"
+			$errors[] = "Password not filled";
 		}
 
 
@@ -107,33 +113,25 @@ if (isset($_POST['action']) && in_array($_POST['action'], $actions))
 															WHERE name = "'. $register_name .'" OR email = "'. $register_email .'"')))
 			{
 				$errors[] = "Account already exists with this username and/or email";
-				header('location: ?page='. $page);
-				exit;
 			}
 		}
-		else
-		{
-			header('location: ?page='. $page);
-			exit;
-		}
+
 
 		// Database registration
-		$register_password = password_hash($register_password, PASSWORD_DEFAULT);
+		if (count($errors) == 0)
+		{
+			$register_password = password_hash($_POST['register_password'], PASSWORD_DEFAULT);
 
-		if(mysqli_query($db, '	INSERT INTO user(email, name, password)
-								VALUES ("'. $register_name .'","'. $register_email '","'. $register_password .'")'))
-		{
-			header('Location: ?page=register&success=true');
-			exit;
-		}
-		else
-		{
-			$errors[] = "Cannot connect to database";
+			if(mysqli_query($db, '	INSERT INTO user(email, name, password)
+									VALUES ("'. $register_email .'","'. $register_name .'","'. $register_password .'")'))
+			{
+				header('Location: ?page=register&success=true');
+				exit;
+			}
+			else
+			{
+				$errors[] = "Cannot connect to database";
+			}
 		}
 	}
-}
-else
-{
-	header('Location: ?page='.$page);
-	exit;
 }
