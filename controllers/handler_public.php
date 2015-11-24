@@ -32,6 +32,7 @@ if (isset($_POST['action']))
 		$query = "	SELECT id_sender, content, date_sent, user.name AS user_name
 					FROM public
 					LEFT JOIN user ON public.id_sender =  user.id
+					ORDER BY date_sent DESC
 					LIMIT 30
 				";
 
@@ -54,6 +55,27 @@ if (isset($_POST['action']))
 		{
 			$errors[] = "Connection error";
 		}
+		exit;
+	}
+
+
+	// Read
+	if ($_POST['action'] == 'userUpdate')
+	{
+		$query = mysqli_query($db, 'SELECT id, name, date_last_connect
+									FROM user
+									ORDER BY name DESC');
+		
+		$users = array();
+		while( $user = mysqli_fetch_assoc($query))
+		{
+			if (strtotime($user['date_last_connect']) > (time()-2))
+			{
+				$users[] = $user;
+			}
+		}
+		
+		echo json_encode($users);
 		exit;
 	}
 }
