@@ -9,6 +9,4 @@ if (!is_nan($key))
 {	
 	$header = $headerArray[$key];
 }
-
-var_dump($header);
 require('./views/skel_header.phtml');
