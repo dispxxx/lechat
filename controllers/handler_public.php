@@ -10,10 +10,10 @@ if (isset($_POST['action']))
 		if (isset($_POST['message_id_sender'], $_POST['message_content']))
 		{
 			$message_content = mysqli_real_escape_string($db, $_POST['message_content']);
-
+		
 			$query = "	INSERT INTO public(id_sender, content)
 						VALUES(".$_POST['message_id_sender'].", '".$message_content."')";
-			
+		
 			if($data = mysqli_query($db, $query))
 			{
 				$success = "Votre message a bien été envoyé!";
@@ -34,16 +34,25 @@ if (isset($_POST['action']))
 					LEFT JOIN user ON public.id_sender =  user.id
 					LIMIT 30
 				";
-		$datas = mysqli_query($db, $query);
 
-		while ($data = mysqli_fetch_assoc($datas)){
-			echo '<p>';
-			echo '<em>'. date('G:i', strtotime($data['date_sent']))."</em> ";
-			echo "<strong>@".$data['user_name']."</strong>";
-			echo ': '.$data['content'];
-			echo '</p>';
+		$data = mysqli_query($db, $query);
+
+		while ($result = mysqli_fetch_assoc($data))
+		{
+			require('views/content_chat_list.phtml');
 		}
+
+		$query = "UPDATE user SET date_last_connect = ".time()." WHERE id = ".$_SESSION['id'];
+
+		if ($data = mysqli_query($db, $query))
+		{
+			echo "success";
+		}
+		else
+		{
+			echo "errors";
+		}
+		print_r($query);
 		exit;
 	}
-
 }

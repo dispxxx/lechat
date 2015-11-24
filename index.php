@@ -3,6 +3,7 @@
 session_start();
 
 
+
 // DB connection
 $db = mysqli_connect('192.168.1.51', 'lechat', 'gochat', 'lechat');
 if (mysqli_connect_errno()) {
