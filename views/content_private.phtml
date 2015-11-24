@@ -1,38 +1,3 @@
-<script>
-	$(document).ready(function()
-	{
-
-		// Get messages
-		function fetch()
-		{
-			$.post(
-				'index.php?page=chat',
-				{		
-					handler: 'public',
-					action: 'recept',
-					id_user: <?php echo $_SESSION['id']; ?>
-				},
-				function (data)
-				{
-					console.log(data)
-					$('.chatbox').html(data)
-				}
-			})
-		}
-
-		// Write message
-		function insert()
-		{
-
-		}
-
-		fetch()
-		setInterval(fetch, 1000)
-
-		$('#chat_send').submit(insert)
-	})
-</script>
-
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
@@ -42,17 +7,48 @@
 		</div>
 		<div class="col-xs-12">
 			<form action="" methode="POST" class="form_chat">
-				<input type="hidden" name="message_action" class="message_action" value="send" >
-				<div class="form-group">
-					<div class="col-xs-11">
-						<input type="text" placeholder="Message" name="message_chat" class="message_chat">
-					</div>
-					<div class="col-xs-1">
-						<button type="submit"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>
-					</div>
-				</div>
+				<div class="input-group">
+			      	<input type="text" class="form-control message_chat" name="message_chat" placeholder="Message">
+			      	<span class="input-group-btn">
+			        	<button class="btn btn-default" type="submit"><span style='line-height : inherit' class="glyphicon glyphicon-send" aria-hidden="true"></span></button>
+			      	</span>
+			    </div>
 
 			</form>
 		</div>
+		<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+  	<?php 
+  	var_dump($data);
+  	while($result= mysqli_fetch_assoc($data)){
+  		if ($_SESSION['id']== $result['name_sender']) {
+  		?>
+			<li role="presentation" class="active"><a href="#" aria-controls="home" role="tab" data-toggle="tab"><?php echo $result['name_recipient']?></a></li>
+		<?php
+  		}elseif($_SESSION['id'] == $result['name_recipient']){
+  	?>
+  			<li role="presentation" class="active"><a href="#" aria-controls="home" role="tab" data-toggle="tab"><?php echo $result['name_sender']?></a></li>
+  	<?php
+  		}
+  	}?>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">...</div>
+    <div role="tabpanel" class="tab-pane" id="profile">.p..</div>
+    <div role="tabpanel" class="tab-pane" id="messages">...</div>
+    <div role="tabpanel" class="tab-pane" id="settings">...</div>
+  </div>
+
+</div>
 	</div>
 </div>
+<script>
+	$('#myTabs a').click(function (e) {
+  	e.preventDefault()
+  	$(this).tab('show')
+})
+</script>
