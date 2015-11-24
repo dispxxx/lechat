@@ -1,0 +1,6 @@
+.chatbox {
+	max-height: 30vh;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	margin-bottom: 1rem;
+}
