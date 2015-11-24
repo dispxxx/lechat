@@ -1,6 +1,19 @@
+.header {
+	background-color: rgba(200, 200, 200, 1);
+	margin-top: 50px;
+}
 .chatbox {
-	max-height: 30vh;
+	max-height: 60vh;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	margin-bottom: 1rem;
+}
+.bg-info {
+	width: 100%;
+	margin: 2px 0;
+	padding: 0;
+	background: none;
+}
+.bg-info em {
+	font-size: 1rem;
 }

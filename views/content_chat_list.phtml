@@ -1,5 +1,5 @@
-<p class="bg-info" style="padding: 15px">
-	<em><?php echo date('G:i', strtotime($result['date_sent']));?></em>
-	<strong>@<?php echo htmlentities($result['user_name']);?></strong>
+<p class="bg-info">
+	<em><?php echo date('H:i:s', strtotime($result['date_sent']));?></em>
+	<strong><?php echo htmlentities($result['user_name']);?></strong>
 	 : <?php echo htmlentities($result['content']);?>
 </p>
