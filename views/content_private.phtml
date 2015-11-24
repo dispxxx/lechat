@@ -9,6 +9,8 @@
 				'index.php?page=chat',
 				{		
 					handler: 'public',
+					action: 'recept',
+					id_user: <?php echo $_SESSION['id']; ?>
 				},
 				function (data)
 				{
