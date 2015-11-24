@@ -1,0 +1,56 @@
+<script>
+	$(document).ready(function()
+	{
+
+		// Get messages
+		function fetch()
+		{
+			$.post(
+				'index.php?page=chat',
+				{		
+					handler: 'public',
+				},
+				function (data)
+				{
+					console.log(data)
+					$('.chatbox').html(data)
+				}
+			})
+		}
+
+		// Write message
+		function insert()
+		{
+
+		}
+
+		fetch()
+		setInterval(fetch, 1000)
+
+		$('#chat_send').submit(insert)
+	})
+</script>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="chatbox">
+				
+			</div>
+		</div>
+		<div class="col-xs-12">
+			<form action="" methode="POST" class="form_chat">
+				<input type="hidden" name="message_action" class="message_action" value="send" >
+				<div class="form-group">
+					<div class="col-xs-11">
+						<input type="text" placeholder="Message" name="message_chat" class="message_chat">
+					</div>
+					<div class="col-xs-1">
+						<button type="submit"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+</div>
