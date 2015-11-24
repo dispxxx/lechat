@@ -1,5 +1,4 @@
 <?php 
-var_dump($_POST);
 	if (isset($_POST['action'])) {
 
 		///////* Send action *//////////
@@ -29,8 +28,8 @@ var_dump($_POST);
 			while ($result = mysqli_fetch_assoc($data)){
 				echo '<p>';
 				echo '<em>'. date('G:i', strtotime($result['date_sent']))."</em> ";
-				echo "<strong>@".$result['user_name']."</strong>";
-				echo ': '.$result['content'];
+				echo "<strong>@".htmlentities($result['user_name'])."</strong>";
+				echo ': '.htmlentities($result['content']);
 				echo '</p>';
 			}
 			exit;
