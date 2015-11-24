@@ -7,7 +7,9 @@ $query = "	SELECT id_sender, content, date_sent, user.name AS user_name
 		";
 $data = mysqli_query($db, $query);
 while ($result = mysqli_fetch_assoc($data)){
-	echo "@".$result['user_name'];
-	echo 'Message : '.$result['content'];
-	echo 'Date : '.$result['date_sent'];
+	echo '<p>';
+	echo '<em>'. date('G:i', strtotime($result['date_sent']))."</em> ";
+	echo "<strong>@".$result['user_name']."</strong>";
+	echo ': '.$result['content'];
+	echo '</p>';
 }
