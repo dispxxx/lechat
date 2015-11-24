@@ -9,7 +9,6 @@ if (isset($_POST['action']))
 	{
 		if (isset($_POST['message_content']))
 		{
-			echo "hi";
 			$message_content = mysqli_real_escape_string($db, $_POST['message_content']);
 		
 			$query = "	INSERT INTO public(id_sender, content)
@@ -49,13 +48,12 @@ if (isset($_POST['action']))
 
 		if ($data = mysqli_query($db, $query))
 		{
-			echo "success";
+	
 		}
 		else
 		{
-			echo "errors";
+			$errors[] = "Connection error";
 		}
-		print_r($query);
 		exit;
 	}
 }
