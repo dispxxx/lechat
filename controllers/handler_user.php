@@ -107,10 +107,12 @@ if (isset($_POST['action']) && in_array($_POST['action'], $actions))
 
 
 		// Check if user exists
-		if (count($errors) == 0) {
-			if (0 != mysqli_fetch_assoc(mysqli_query($db, '	SELECT COUNT(name)
-															FROM user
-															WHERE name = "'. $register_name .'" OR email = "'. $register_email .'"')))
+		if (count($errors) == 0)
+		{
+			$query = mysqli_query($db, 'SELECT *
+										FROM user
+										WHERE name = "'. $register_name .'" OR email = "'. $register_email .'"');
+			if (mysqli_fetch_assoc($query))
 			{
 				$errors[] = "Account already exists with this username and/or email";
 			}
