@@ -28,18 +28,7 @@ $access_admin = array('dashboard');
 
 // Handlers
 $handler_public = array('user');
-$handler_user = array('user', 'public', 'private');
-
-
-// Default page
-if (isset($_SESSION['id']))
-{
-	$page = 'chat';
-}
-else
-{
-	$page = 'login';
-}
+$handler_user = array('public', 'private');
 
 
 // Page access
@@ -62,16 +51,31 @@ if (isset($_GET['page']))
 		$page = '404';
 	}
 
-	if (isset($_POST['action']))
+	if (isset($_POST['handler']))
 	{
-		if (in_array($_POST['action'], $handler_public))
+		if (in_array($_POST['handler'], $handler_public))
 		{
-			require('controllers/handler_'. $_POST['action'] .'.php');
+			require('controllers/handler_'. $_POST['handler'] .'.php');
 		}
-		else if (in_array($_POST['action'], $handler_user) && isset($_SESSION['id']))
+		else if (in_array($_POST['handler'], $handler_user) && isset($_SESSION['id']))
 		{
-			require('controllers/handler_'. $_POST['action'] .'.php');
+			require('controllers/handler_'. $_POST['handler'] .'.php');
 		}
+	}
+}
+else
+{
+
+
+	// Default pages
+	if (isset($_SESSION['id'])) {
+		header('location: ?page=chat');
+		exit;
+	}
+	else
+	{
+		header('location: ?page=login');
+		exit;
 	}
 }
 
