@@ -136,4 +136,14 @@ if (isset($_POST['action']) && in_array($_POST['action'], $actions))
 			}
 		}
 	}
+
+
+	// Read
+	if ($action == 'read')
+	{
+		$query = '	SELECT name
+					FROM user
+					WHERE '. strtotime(.'date_last_connect'. ) .'> '. (time()-1);
+		var_dump($query);
+	}
 }
