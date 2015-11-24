@@ -27,6 +27,13 @@
 			while ($result = mysqli_fetch_assoc($data)){
 				require('views/content_chat_list.phtml');
 			}
+			$query = "UPDATE user SET date_last_connect = ".time()." WHERE id = ".$_SESSION['id'];
+			if ($data = mysqli_query($db, $query)) {
+				echo "success";
+			}else {
+				echo "errors";
+			}
+			print_r($query);
 			exit;
 		}
 
