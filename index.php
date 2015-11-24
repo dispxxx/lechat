@@ -30,6 +30,13 @@ $access_admin = array('dashboard');
 // Handlers
 $handler_public = array('user');
 $handler_user = array('public', 'private');
+$handlers = array(
+	'login' => 'user',
+	'register' => 'user',
+	'chat' => 'public',
+	'private' => 'private',
+	'dashboard' => 'user'
+);
 
 
 // Page access
