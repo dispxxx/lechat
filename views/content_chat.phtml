@@ -4,12 +4,11 @@
 		{
 			$.post("index.php?page=chat", {handler: "public", action: "recept"},function(data)
 			{
-				console.log(data);
 				$('.chatbox').html(data);
 			})
 		}
 		getMessage();
-		// setInterval(getMessage, 1000);
+		setInterval(getMessage, 1000);
 
 		$('.form_chat').submit( function (){
 			var id_user = <?php echo $_SESSION['id'];?>;
@@ -37,14 +36,12 @@
 		<div class="col-xs-12">
 			<form action="" methode="POST" class="form_chat">
 				<input type="hidden" name="message_action" class="message_action" value="send" >
-				<div class="form-group">
-					<div class="col-xs-11">
-						<input type="text" placeholder="Message" name="message_chat" class="message_chat">
-					</div>
-					<div class="col-xs-1">
-						<button type="submit"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>
-					</div>
-				</div>
+				<div class="input-group">
+			      	<input type="text" class="form-control message_chat" name="message_chat" placeholder="Message">
+			      	<span class="input-group-btn">
+			        	<button class="btn btn-default" type="submit"><span style='line-height : inherit' class="glyphicon glyphicon-send" aria-hidden="true"></span></button>
+			      	</span>
+			    </div>
 
 			</form>
 		</div>

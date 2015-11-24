@@ -11,7 +11,6 @@
 				}else {
 					$errors[]= "Une erreur est survenu, merci de recommencer!";
 				}
-
 				exit;
 
 			}
@@ -26,11 +25,7 @@
 					";
 			$data = mysqli_query($db, $query);
 			while ($result = mysqli_fetch_assoc($data)){
-				echo '<p>';
-				echo '<em>'. date('G:i', strtotime($result['date_sent']))."</em> ";
-				echo "<strong>@".htmlentities($result['user_name'])."</strong>";
-				echo ': '.htmlentities($result['content']);
-				echo '</p>';
+				require('views/content_chat_list.phtml');
 			}
 			exit;
 		}
