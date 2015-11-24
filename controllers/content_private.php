@@ -3,7 +3,12 @@ $query = "	SELECT private.id, id_recipient, id_sender, recipient.name AS name_re
 			FROM private 
 			LEFT JOIN user recipient ON private.id_recipient = recipient.id
 			LEFT JOIN user sender ON private.id_sender = sender.id
-			WHERE id_recipient = ".$_SESSION['id']." OR id_sender = ".$_SESSION['id'];
+			WHERE id_recipient = ".$_SESSION['id']." OR id_sender = ".$_SESSION['id'].'
+			GROUP BY 
+				CASE
+					WHEN id_recipient = '.$_SESSION['id'].' THEN id_sender
+					WHEN id_sender = '.$_SESSION['id'].' THEN id_recipient
+				END';
 var_dump($query);
 if ($data = mysqli_query($db, $query)) {
 	$count = mysqli_num_rows($data);

@@ -23,13 +23,13 @@
   	<?php 
   	var_dump($data);
   	while($result= mysqli_fetch_assoc($data)){
-  		if ($_SESSION['id']== $result['name_sender']) {
-  		?>
-			<li role="presentation" class="active"><a href="#" aria-controls="home" role="tab" data-toggle="tab"><?php echo $result['name_recipient']?></a></li>
-		<?php
+  		if ($_SESSION["id"] == $result['name_sender']){
+  			$other_name = $result['name_recipient'];
   		}elseif($_SESSION['id'] == $result['name_recipient']){
-  	?>
-  			<li role="presentation" class="active"><a href="#" aria-controls="home" role="tab" data-toggle="tab"><?php echo $result['name_sender']?></a></li>
+  			$other_name = $result['name_sender']
+  		}
+  		?>
+			<li role="presentation" class="active"><a href="#" aria-controls="home" role="tab" data-toggle="tab"><?php echo $other_name ?></a></li>
   	<?php
   		}
   	}?>
