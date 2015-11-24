@@ -1,54 +1,56 @@
+<script src="public/js/public.js"></script>
 <div class="container">
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="chatbox">
-				
-			</div>
-		</div>
-		<div class="col-xs-12">
-			<form action="" methode="POST" class="form_chat">
-				<div class="input-group">
-			      	<input type="text" class="form-control message_chat" name="message_chat" placeholder="Message">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <?php
+                $row = 0;
+                while ($result = mysqli_fetch_assoc($data)) {
+                    if ($_SESSION["id"] == $result['id_sender']) {
+                        $other_name = $result['name_recipient'];
+                        $other_id = $result['id_recipient'];
+                    } elseif ($_SESSION['id'] == $result['id_recipient']) {
+                        $other_name = $result['name_sender'];
+                        $other_id = $result['id_sender'];
+                    }
+                    $row++;
+                    ?>
+                    <li role="presentation" <?php if ($row == 1) {
+                        echo 'class="active"';
+                    } ?> ><a href="#" aria-controls="<?php echo $other_id; ?>"
+                             role="tab"
+                             data-toggle="tab"><?php echo htmlentities($other_name); ?></a>
+                    </li>
+                    <?php
+                }
+                ?>
+            </ul>
+        </div><!-- Tab panes -->
+        <div class="col-xs-12">
+            <div class="chatbox">
+
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <form action="" methode="POST" class="form_chat_private">
+                <div class="input-group">
+                    <input type="text" class="form-control message_chat" name="message_chat" placeholder="Message">
 			      	<span class="input-group-btn">
-			        	<button class="btn btn-default" type="submit"><span style='line-height : inherit' class="glyphicon glyphicon-send" aria-hidden="true"></span></button>
+			        	<button class="btn btn-default" type="submit">
+                            <span style='line-height : inherit' class="glyphicon glyphicon-send"
+                                  aria-hidden="true"></span>
+                        </button>
 			      	</span>
-			    </div>
-
-			</form>
-		</div>
-		<div>
-
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-  	<?php 
-  	var_dump($data);
-  	while($result= mysqli_fetch_assoc($data)){
-  		if ($_SESSION["id"] == $result['name_sender']){
-  			$other_name = $result['name_recipient'];
-  		}elseif($_SESSION['id'] == $result['name_recipient']){
-  			$other_name = $result['name_sender']
-  		}
-  		?>
-			<li role="presentation" class="active"><a href="#" aria-controls="home" role="tab" data-toggle="tab"><?php echo $other_name ?></a></li>
-  	<?php
-  		}
-  	}?>
-  </ul>
-
-  <!-- Tab panes -->
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="home">...</div>
-    <div role="tabpanel" class="tab-pane" id="profile">.p..</div>
-    <div role="tabpanel" class="tab-pane" id="messages">...</div>
-    <div role="tabpanel" class="tab-pane" id="settings">...</div>
-  </div>
-
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-	</div>
-</div>
+
 <script>
-	$('#myTabs a').click(function (e) {
-  	e.preventDefault()
-  	$(this).tab('show')
-})
+    $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
 </script>

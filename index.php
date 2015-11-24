@@ -5,7 +5,8 @@ session_start();
 
 
 // DB connection
-$db = mysqli_connect('192.168.1.51', 'lechat', 'gochat', 'lechat');
+/*$db = mysqli_connect('192.168.1.51', 'lechat', 'gochat', 'lechat');*/
+$db = mysqli_connect('localhost', 'root', '', 'lechat');
 if (mysqli_connect_errno()) {
     printf("Échec de la connexion : %s\n", mysqli_connect_error());
     exit();
