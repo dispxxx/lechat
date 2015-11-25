@@ -30,7 +30,7 @@ class PublicMessage
 
 
 	// Setters
-	public function setMessage ($content)
+	public function setContent ($content)
 	{
 	
 		// Check content
