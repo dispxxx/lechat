@@ -109,7 +109,6 @@ $(document).ready(function() {
     // Get discussion
     function getMessagePrivate()
     {
-        console.log($('li.active a').attr('aria-controls'))
         $.post(
             "index.php?page=private",
             {
@@ -123,11 +122,29 @@ $(document).ready(function() {
             }
         )
     }
+    // Get discussion
+    function getMessagePrivateClick(this)
+    {
+        console.log($(this).attr('aria-controls'))
+        $.post(
+            "index.php?page=private",
+            {
+                handler: "private",
+                action: "recept",
+                other_id : $(this).attr('aria-controls')
+         
+            },
+            function(data)
+            {
+                $('.chatbox').html(data);
+            }
+        )
+    }
     // Send message
     $('.form_chat_private').submit(
         function ()
         {
-            var content = $('.message_chat').val()
+            var content = $('.message_chat').val();
 
             $.post(
                 'index.php?page=private',
@@ -139,21 +156,28 @@ $(document).ready(function() {
                 },
                 function(status)
                 {
-                    $('.chatbox').append(status)
-                    $('.message_chat').val('')
+                    $('.chatbox').append(status);
+                    $('.message_chat').val('');
                 }
             )
 
-            getMessagePrivate()
-            return false
+            getMessagePrivate();
+            return false;
         }
     )
     if($_GET('page')== 'private'){
-        getMessagePrivate();
-        setInterval(getMessagePrivate, 1000);
-        $('li a').click(function(){
-            getMessagePrivate()
+        
+        $('li a.user').click(function(){
+
+        	clearInterval(interval);
+            getMessagePrivateClick(this);
+            var interval = setInterval(getMessagePrivate, 60000);
         });
+        
+        getMessagePrivate();
+        var interval =  setInterval(getMessagePrivate, 60000);
+        
+
     }
 
 
