@@ -44,9 +44,9 @@ class PublicMessage
 		$this -> content = mysqli_escape_string($db, $content);
 		return true;
 	}
-	public function setSender ($id_sender)
+	public function setSender (User $sender)
 	{
-		$this -> id_sender = $id_sender;
+		$this -> id_sender = $sender -> $getId();
 		return true;
 	}
 }
