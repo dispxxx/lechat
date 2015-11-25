@@ -33,7 +33,7 @@ class user
 		return $this->date_last_connect;
 	}
 	public function setEmail($email){
-		if (preg_match("#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z]{2,5}$#", $email))
+		if ( filter_var($email, FILTER_VALIDATE_EMAIL))
 		{
 			$this->email = $email;
 			return;
@@ -68,7 +68,7 @@ class user
 		else
 		{
 			if ($password == $passordRepeat) {
-				$this->password = $password;
+				$this->password = password_hash($password, PASSWORD_DEFAULT);
 				return true;
 			}else {
 				return = "Password fields don't match";
