@@ -71,7 +71,7 @@ class user
 				$this->password = password_hash($password, PASSWORD_DEFAULT);
 				return true;
 			}else {
-				return = "Password fields don't match";
+				return "Password fields don't match";
 			}
 		}
 	}

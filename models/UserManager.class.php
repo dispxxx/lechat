@@ -4,7 +4,12 @@ class UserManager
 {
 	private $db; 
 
-	public function create($email, $name, $password)
+	public function __construct($db)
+	{
+		$this->db = $db;
+	}
+
+	public function create($email, $name, $password, $password2)
 	{
 		$user = new User();
 		$valide = $user->setEmail($email);
@@ -13,7 +18,7 @@ class UserManager
 			$valide = $user->setName($name);
 			if ($valide === true) 
 			{
-				$valide = $user->setPassword($password);
+				$valide = $user->setPassword($password, $password2);
 				if ($valide === true) 
 				{
 					$email = mysqli_real_escape_string($this->db, $user->getEmail());
