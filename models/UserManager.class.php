@@ -7,13 +7,13 @@ class UserManager
 	public function create($email, $name, $password)
 	{
 		$user = new User();
-		$valide = $email->setEmail($email);
+		$valide = $user->setEmail($email);
 		if($valide === true)
 		{
-			$valide = $name->setName($name);
+			$valide = $user->setName($name);
 			if ($valide === true) 
 			{
-				$valide = $password->setPassword($password);
+				$valide = $user->setPassword($password);
 				if ($valide === true) 
 				{
 					$email = mysqli_real_escape_string($this->db, $user->getEmail());
