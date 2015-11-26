@@ -17,6 +17,12 @@ spl_autoload_register(function($class)
     require('models/'.$class.'.class.php');
 });
 
+//Autoload
+spl_autoload_register(function($class)
+{
+    require('models/'.$class.'.class.php');
+});
+
 
 // Constants
 define('STATUS_USER', '0');

@@ -1,5 +1,4 @@
 <?php 
-require('models/User.class.php');
 class UserManager
 {
 	private $db; 
@@ -40,7 +39,7 @@ class UserManager
 					}
 					else
 					{
-						return "error db";
+						return "errors";
 					}
 				}	
 				else
@@ -60,9 +59,10 @@ class UserManager
 
 
 	}
-	public function delete()
+	public function delete(User $user)
 	{
-
+		$id = $user->getId();
+		$query = "DELETE FROM user WHERE id='".$user."'";
 	}
 	public function update()
 	{

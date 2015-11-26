@@ -40,7 +40,7 @@ class user
 		if ( filter_var($email, FILTER_VALIDATE_EMAIL))
 		{
 			$this->email = $email;
-			return;
+			return true;
 		}
 		else {
 			return 'Email not valid';
