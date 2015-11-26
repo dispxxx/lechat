@@ -14,13 +14,14 @@ if ($db === false)
 // Objects autoloader
 spl_autoload_register(function($class)
 {
-    require('models/'.$class.'.class.php');
+   require('models/'.$class.'.class.php');
 });
 if (isset($_SESSION['id']))
 {
 	$userManager = new UserManager($db);
 	$currentUser = $userManager->getCurrent();
 }
+
 
 // Constants
 define('STATUS_USER', '0');
