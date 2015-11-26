@@ -12,6 +12,12 @@ if (mysqli_connect_errno()) {
     exit();
 }
 
+//Autoload
+spl_autoload_register(function($class)
+{
+    require('models/'.$class.'.class.php');
+});
+
 
 // Constants
 define('STATUS_USER', '0');
