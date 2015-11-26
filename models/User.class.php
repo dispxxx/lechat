@@ -20,6 +20,10 @@ class user
 	public function getName(){
 		return $this->name;
 	}
+	public function getHash()
+	{
+		return $this->password;
+	}
 	public function getStatus(){
 		return $this->status;
 	}

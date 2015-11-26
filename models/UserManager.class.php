@@ -9,7 +9,7 @@ class UserManager
 		$this->db = $db;
 	}
 
-	public function create($email, $name, $password, $password2)
+	public function create($email, $name, $password, $passwordRepeat)
 	{
 		$user = new User();
 		$valide = $user->setEmail($email);
@@ -18,12 +18,12 @@ class UserManager
 			$valide = $user->setName($name);
 			if ($valide === true) 
 			{
-				$valide = $user->setPassword($password, $password2);
+				$valide = $user->setPassword($password, $passwordRepeat);
 				if ($valide === true) 
 				{
 					$email = mysqli_real_escape_string($this->db, $user->getEmail());
 					$name = mysqli_real_escape_string($this->db, $user->getName());
-					$password = mysqli_real_escape_string($this->db, $user->getPassword());
+					$password = $user->getHash();
 					$query = "INSERT INTO user (email, name, password) VALUES('".$email."', '".$name."', '".$password."')";
 					$res = mysqli_query($this->db, $query);
 					if ($res) 
@@ -37,6 +37,10 @@ class UserManager
 						{
 							return "Internal server error";
 						}
+					}
+					else
+					{
+						return "error db";
 					}
 				}	
 				else
@@ -64,9 +68,26 @@ class UserManager
 	{
 
 	}
-	public function find()
+	public function findById($id)
 	{
-
+		$id = intval($id);
+		$query = "SELECT * FROM user WHERE id = '".$id."'";
+		$res = mysqli_query($this->db, $query);
+		if ($res) 
+		{
+			$user = mysqli_fetch_object($res, "User");
+			if ($user) {
+				return $user;
+			}
+			else
+			{
+				return "User not found";
+			}
+		}
+		else
+		{
+			return "Internal server error";
+		}
 	}
 	public function findByName()
 	{

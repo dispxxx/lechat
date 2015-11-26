@@ -6,10 +6,16 @@ if (in_array($_POST['action'], $actions)) {
 
 if ($action == "register") {
 	if (isset($_POST['register_email'], $_POST['register_name'], $_POST['register_password'], $_POST['register_password_repeat'])) {
-		echo "register";
 		require('models/UserManager.class.php');
 		$userManager = new UserManager($db);
 		$user = $userManager->create($_POST['register_email'], $_POST['register_name'], $_POST['register_password'], $_POST['register_password_repeat']);
+		if (is_string($user)) {
+			$errors[] = $user;
+		}
+		else
+		{
+			var_dump($user);
+		}
 	}
 }
 
