@@ -1,16 +1,21 @@
 <?php
-// User session start
+
+// Start session
 session_start();
 
 
-
-// DB connection
+// Initialize database
 $db = mysqli_connect('192.168.1.51', 'lechat', 'gochat', 'lechat');
-// $db = mysqli_connect('localhost', 'root', '', 'lechat');
-if (mysqli_connect_errno()) {
-    printf("Échec de la connexion : %s\n", mysqli_connect_error());
-    exit();
-}
+
+if ($db === false)
+	die(mysqli_connect_error());
+
+
+// Objects autoloader
+spl_autoload_register(function($class)
+{
+    require('models/'.$class.'.class.php');
+});
 
 
 // Constants

@@ -4,6 +4,11 @@ class PublicMessageManager
 {
 	private $db;
 
+	public function __construct($db)
+	{
+		$this -> db = $db;
+	}
+
 	public function create ($content, User $sender)
 	{
 		$publicMessage = new PublicMessage();

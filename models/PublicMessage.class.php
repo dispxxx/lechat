@@ -34,19 +34,22 @@ class PublicMessage
 	{
 	
 		// Check content
-		if ($content == '') {
+		if ($content == '')
+		{
 			return "You can't send empty messages";
 		}
-		if (strlen($content) > 1022) {
+		if (strlen($content) > 1022)
+		{
 			return "Your message is too long";
 		}
-		
-		$this -> content = mysqli_escape_string($db, $content);
-		return true;
+		else
+		{
+		return ($this -> content = mysqli_escape_string($db, $content));
+		}
 	}
+	
 	public function setSender (User $sender)
 	{
-		$this -> id_sender = $sender -> $getId();
-		return true;
+		return ($this -> id_sender = $sender -> $getId());
 	}
 }
