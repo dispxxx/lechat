@@ -131,4 +131,33 @@ class UserManager
 	{
 
 	}
+	public function getCurrent()
+	{
+		if (isset($_SESSION['id'])) 
+		{
+			$query = "SELECT * FROM user WHERE id= '".$_SESSION['id']."'";
+			$res = mysqli_query($this->db, $query);
+			if ($res) 
+			{
+				$user = mysqli_fetch_object($res, "User");
+				if ($user) {
+					$query = "UPDATE user SET last=NOW() WHERE id'".$user->getId()."'";
+					mysqli_query($this->db, $query);
+					return $user;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
