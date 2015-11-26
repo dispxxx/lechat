@@ -18,6 +18,33 @@ if ($action == "register") {
 		}
 	}
 }
+if ($action == "login") {
+	if (isset($_POST['login_email'], $_POST['login_password'])) {
+		$manager = new UserManager($db);
+		$retour = $manager -> findByEmail($_POST['login_email']);
+		if (is_string($retour)) {
+			$errors[] = $retour;
+		}
+		else
+		{
+			$user = $retour;
+			if ($user->verifPassword($_POST['login_password'])) {
+				$_SESSION['id'] = $user->getId();
+				header('Location : index.php');
+				exit;
+			}
+			else
+			{
+				$errors[] = "Incorrect password";
+			}
+		}
+
+	}
+	else
+	{
+		$errors[]= "Field not filled";
+	}
+}
 
 // // Test post_action
 // $actions = array('login', 'register');

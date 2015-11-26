@@ -15,7 +15,7 @@
 		  		<li <?php if($page=='register'){echo 'class="active"';};?>><a href="?page=logout">Logout</a></li>
 				<li <?php if($page=='register'){echo 'class="active"';};?>><a href="?page=chat">Chat</a></li>
 				<li <?php if($page=='register'){echo 'class="active"';};?>><a href="?page=private">Private</a></li>
-		<?php if ($_SESSION['status'] == STATUS_ADMIN ) { ?>
+		<?php if ($currentUser->getStatus() == STATUS_ADMIN ) { ?>
 					<li <?php if($page=='register'){echo 'class="active"';};?>><a href="?page=dashboard">Dashboard</a></li>
 		<?php }}?>	
 	   	</ul>
