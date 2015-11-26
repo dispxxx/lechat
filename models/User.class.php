@@ -95,6 +95,10 @@ class user
 		$this->date_last_connect = $date_last_connect;
 		return true;
 	}
+	public function verifPassword($password)
+	{
+		return (password_verify($password, $this->password));
+	}
 
 
 }

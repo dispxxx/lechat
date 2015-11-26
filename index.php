@@ -16,13 +16,11 @@ spl_autoload_register(function($class)
 {
     require('models/'.$class.'.class.php');
 });
-
-//Autoload
-spl_autoload_register(function($class)
+if (isset($_SESSION['id']))
 {
-    require('models/'.$class.'.class.php');
-});
-
+	$userManager = new UserManager($db);
+	$currentUser = $userManager->getCurrent();
+}
 
 // Constants
 define('STATUS_USER', '0');

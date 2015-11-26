@@ -63,8 +63,17 @@ class UserManager
 	{
 		$id = $user->getId();
 		$query = "DELETE FROM user WHERE id='".$user."'";
+		$res = mysqli_query($this->db, $query);
+		if($res)
+		{
+			return true;
+		}
+		else
+		{
+			return "Internal Server Error";
+		}
 	}
-	public function update()
+	public function update(User $user)
 	{
 
 	}
@@ -87,6 +96,27 @@ class UserManager
 		else
 		{
 			return "Internal server error";
+		}
+	}
+	public function findByEmail($email)
+	{
+		if (strlen(trim($email)) > 0) {
+			$email = mysqli_escape_string($this->db, $email);
+			$query = "SELECT * FROM user WHERE email = '".$email."'";
+			$res = mysqli_query($this->db, $query);
+			if ($res) 
+			{
+				$user = mysqli_fetch_object($res, "User");
+				return $user;
+			}
+			else
+			{
+				return "Server error";
+			}
+		}
+		else
+		{
+			"Email not found";
 		}
 	}
 	public function findByName()
