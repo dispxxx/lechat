@@ -55,9 +55,24 @@ class PublicMessageManager
 		}
 	}
 
-	public function read ($id)
+	public function read ()
 	{
-		return $this -> findById($id);
+		$query = 'SELECT * FROM publicMessage ORDER BY date_sent DESC LIMIT 30';
+		$result = mysqli_query($this -> db, $query);
+		$messages = array();
+
+		if ($result)
+		{
+			while ($message = mysqli_fetch_object($result, 'publicMessage'))
+			{
+				$messages[] = $message -> getArray();
+			}
+			return $messages;
+		}
+		else
+		{
+			return 'Database error';
+		}
 	}
 
 	public function readById ($id)

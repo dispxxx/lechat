@@ -27,7 +27,13 @@ class PublicMessage
 	{
 		return $this -> date_sent;
 	}
-
+	public function getArray ()
+	{
+		return array(	'id' => $this -> id,
+						'id_sender' => $this -> id_sender,
+						'content' => htmlentities($this -> content),
+						'date_sent' => $this -> date_sent);
+	}
 
 	// Setters
 	public function setContent ($content)
@@ -47,7 +53,7 @@ class PublicMessage
 		return ($this -> content = mysqli_escape_string($db, $content));
 		}
 	}
-	
+
 	public function setSender (User $sender)
 	{
 		return ($this -> id_sender = $sender -> $getId());

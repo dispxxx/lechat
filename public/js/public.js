@@ -6,14 +6,18 @@ $(document).ready(function() {
 	function getMessage()
 	{
 		$.post(
-			"index.php?page=chat",
+			"index.php?page=chat&ajax",
 			{
-				handler: "public",
-				action: "recept"
+				handler: "public"
 			},
 			function(data)
 			{
-				$('.chatbox').html(data)
+				data = JSON.parse(data)
+				$('.chatbox').empty()
+				for (var i = 0 ; i < data.length; i++)
+				{
+					$('.chatbox').append(data[i].content + '<br>')
+				}
 			}
 		)
 	}
@@ -78,108 +82,108 @@ $(document).ready(function() {
 		)
 	}
 
-    /*
-    Can use $_Get with js
-     */
-    function $_GET(param) {
-        var vars = {};
-        window.location.href.replace(
-            /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-            function( m, key, value ) { // callback
-                vars[key] = value !== undefined ? value : '';
-            }
-        );
+	/*
+	Can use $_Get with js
+	 */
+	function $_GET(param) {
+		var vars = {};
+		window.location.href.replace(
+			/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+			function( m, key, value ) { // callback
+				vars[key] = value !== undefined ? value : '';
+			}
+		);
 
-        if ( param ) {
-            return vars[param] ? vars[param] : null;
-        }
-        return vars;
-    }
+		if ( param ) {
+			return vars[param] ? vars[param] : null;
+		}
+		return vars;
+	}
 
 	if( $_GET('page') == 'chat') {
 		getMessage()
-		setInterval(getMessage, 1000)
-		setInterval(userUpdate, 1000)
+		//setInterval(getMessage, 1000)
+		//setInterval(userUpdate, 1000)
 	}
 
 
 
 
+	/*
+	// Get discussion
+	function getMessagePrivate()
+	{
+		$.post(
+			"index.php?page=private",
+			{
+				handler: "private",
+				action: "recept",
+				other_id : $('li.active a').attr('aria-controls')
+			},
+			function(data)
+			{
+				$('.chatbox').html(data);
+			}
+		)
+	}
+	// Get discussion
+	function getMessagePrivateClick(this)
+	{
+		console.log($(this).attr('aria-controls'))
+		$.post(
+			"index.php?page=private",
+			{
+				handler: "private",
+				action: "recept",
+				other_id : $(this).attr('aria-controls')
+		 
+			},
+			function(data)
+			{
+				$('.chatbox').html(data);
+			}
+		)
+	}
+	// Send message
+	$('.form_chat_private').submit(
+		function ()
+		{
+			var content = $('.message_chat').val();
 
-    // Get discussion
-    function getMessagePrivate()
-    {
-        $.post(
-            "index.php?page=private",
-            {
-                handler: "private",
-                action: "recept",
-                other_id : $('li.active a').attr('aria-controls')
-            },
-            function(data)
-            {
-                $('.chatbox').html(data);
-            }
-        )
-    }
-    // Get discussion
-    function getMessagePrivateClick(this)
-    {
-        console.log($(this).attr('aria-controls'))
-        $.post(
-            "index.php?page=private",
-            {
-                handler: "private",
-                action: "recept",
-                other_id : $(this).attr('aria-controls')
-         
-            },
-            function(data)
-            {
-                $('.chatbox').html(data);
-            }
-        )
-    }
-    // Send message
-    $('.form_chat_private').submit(
-        function ()
-        {
-            var content = $('.message_chat').val();
+			$.post(
+				'index.php?page=private',
+				{
+					handler: "private",
+					message_content: content,
+					action: 'send',
+					other_id: $('li.active a').attr('aria-controls')
+				},
+				function(status)
+				{
+					$('.chatbox').append(status);
+					$('.message_chat').val('');
+				}
+			)
 
-            $.post(
-                'index.php?page=private',
-                {
-                    handler: "private",
-                    message_content: content,
-                    action: 'send',
-                    other_id: $('li.active a').attr('aria-controls')
-                },
-                function(status)
-                {
-                    $('.chatbox').append(status);
-                    $('.message_chat').val('');
-                }
-            )
+			getMessagePrivate();
+			return false;
+		}
+	)
+	if($_GET('page')== 'private'){
+		
+		$('li a.user').click(function(){
 
-            getMessagePrivate();
-            return false;
-        }
-    )
-    if($_GET('page')== 'private'){
-        
-        $('li a.user').click(function(){
+			clearInterval(interval);
+			getMessagePrivateClick(this);
+			var interval = setInterval(getMessagePrivate, 60000);
+		});
+		
+		getMessagePrivate();
+		var interval =  setInterval(getMessagePrivate, 60000);
+		
 
-        	clearInterval(interval);
-            getMessagePrivateClick(this);
-            var interval = setInterval(getMessagePrivate, 60000);
-        });
-        
-        getMessagePrivate();
-        var interval =  setInterval(getMessagePrivate, 60000);
-        
-
-    }
-
+	}
+	*/
 
 
 })

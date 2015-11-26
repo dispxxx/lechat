@@ -1,12 +1,19 @@
 <?php 
-
-if (isset($_POST['message_content']))
+if (isset($_GET['ajax']))
 {
-	require('models/PublicMessageManager.class.php');
-	$publicMessageManager = new PublicMessageManager($db);
-	$userManager = new UserManager($db);
-	$user = $userManager -> getCurrent();
-	$message = $publicMessageManager -> create($_POST['message_content'], $user);
+	if (isset($_POST['message_content']))
+	{
+		$publicMessageManager = new PublicMessageManager($db);
+		$userManager = new UserManager($db);
+		$user = $userManager -> getCurrent();
+		$message = $publicMessageManager -> create($_POST['message_content'], $user);
+	}
+	else
+	{
+		$publicMessageManager = new PublicMessageManager($db);
+		echo (json_encode($publicMessageManager -> read()));
+		exit;
+	}
 }
 
 // if (isset($_POST['action']))
